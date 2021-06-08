@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DataLayer.Entityes.Client>
+    <h1>Index</h1>
+@foreach (var item in Model)
+{
+    <p>@item.Name</p>
+    <p>@item.Type</p>
+    <p>@item.INN</p>
+    <p>@item.ChangeDate</p>
+    <p>@item.CreatingDate</p>
+    <a asp-action="ChangeClient">Change</a>
+    <form method="post">
+        <input type="submit" name="name" value="delete" />
+    </form>
+}
+<a asp-action="CreateClient">Create</a>
