@@ -10,6 +10,12 @@ namespace DataLayer.Entityes
     {
         public int Id { get; set; }
         public int INN { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        /// <summary>
+        /// Отчество
+        /// </summary>
+        public string Patronymic { get; set; }
         public DateTime CreatingDate { get; set; }
         public DateTime ChangeDate { get; set; }
     }

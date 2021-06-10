@@ -13,13 +13,5 @@ namespace TeledocTest.Controllers
         {
             return View();
         }
-        public IActionResult Success(Object obj)
-        {
-            return View(obj);
-        }
-        public IActionResult Success()
-        {
-            return View();
-        }
     }
 }

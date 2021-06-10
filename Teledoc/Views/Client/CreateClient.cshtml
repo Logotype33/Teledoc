@@ -1,1 +1,43 @@
-﻿<p>Create</p>
+﻿@model DataLayer.Entityes.Client
+<p>Client creating form</p>
+<form method="post" class="mt-5">
+    <div class="row justify-content-center">
+        <div class="col-8 mb-4">
+            <label asp-for="@Model.INN" class="form-label">Введите ваш ИНН</label>
+            <input class="form-control" asp-for="@Model.INN" type="text" placeholder="Enter your INN" required>
+        </div>
+        <div class="col-8 mb-4">
+            <label asp-for="@Model.Name" class="form-label">Введите название вашей организации</label>
+            <input class="form-control" asp-for="@Model.Name" type="text" placeholder="Enter name of your organization or SP" required>
+        </div>
+        <div class="col-8 mb-5">
+            <p>Выберите тип вашей организации</p>
+            <select v-model="selected" asp-for="@Model.Type" class="form-select busy-type">
+                <option value="SP">Индивидуальный предприниматель</option>
+                <option value="Entity">ООО</option>
+            </select>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-8 mb-4 d-flex founders">
+                <div class="col-4 mb-3 justify-content-center align-items-center d-flex founderItem" v-for="item in founders" :key="item.id">
+                    <input :name="`Founders[${founders.indexOf(item)}].INN`" :value="item.INN" hidden type="text">
+                    <input :name="`Founders[${founders.indexOf(item)}].Name`" :value="item.Name" type="text">
+                    <input :name="`Founders[${founders.indexOf(item)}].Surname`" :value="item.Surname" type="text">
+                    <input :name="`Founders[${founders.indexOf(item)}].Patronymic`" :value="item.Patronymic" hidden type="text">
+                    <img v-on:click="deleteFounder(item)" class="deleteSVG" src="3847598421541068762.svg" alt="delete">
+                </div>
+            </div>
+            <div class="col-8 ">
+                <h4>Добавить учредителя</h4>
+                <input class="form-control mb-2" v-model="founder.INN" type="text" placeholder="Введите ваш ИНН">
+                <input class="form-control mb-2" v-model="founder.Name" type="text" placeholder="Введите имя">
+                <input class="form-control mb-2" v-model="founder.Surname" type="text" placeholder="Введите фамилию">
+                <input class="form-control mb-2" v-model="founder.Patronymic" type="text" placeholder="Введите отчество">
+                <button class="btn btn-primary" v-on:click.prevent="AddFounderToList(founder)">Добавить</button>
+            </div>
+        </div>
+        <div class="col-5">
+            <input class="form-control btn-success p-3" asp-controller="Client" asp-action="CreateClient" type="submit" value="Add">
+        </div>
+    </div>
+</form>

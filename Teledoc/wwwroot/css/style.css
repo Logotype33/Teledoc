@@ -1,1 +1,18 @@
-﻿
+﻿.founderItem {
+    background-color: #e7e7e7;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.deleteSVG {
+    height: 25px;
+    width: 25px;
+    padding-left: 5px;
+}
+
+.founders {
+    flex-wrap: wrap;
+}
+body{
+    overflow-x:hidden;
+}

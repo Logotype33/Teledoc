@@ -1,0 +1,11 @@
+﻿@model DataLayer.Entityes.Client
+<form asp-controller="Client" asp-action="asd" method="post">
+    <label>INN</label>
+    <input type="text" asp-for="@Model.INN" />
+    <label>Name</label>
+    <input type="text" asp-for="@Model.Name" />
+    <label>Type</label>
+    <input type="text" asp-for="@Model.Type" />
+    <input type="text" name="Founders[0].INN" value="5" hidden/>
+    <input type="submit" name="name" value="Save" />
+</form>

@@ -13,9 +13,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj" />
-    <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
-  </ItemGroup>
-
 </Project>

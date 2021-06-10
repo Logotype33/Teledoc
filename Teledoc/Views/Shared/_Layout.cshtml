@@ -3,18 +3,52 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link href="~/css/style.css" rel="stylesheet" />
     <title>TeledocTest</title>
 </head>
 <body>
     <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home">Main</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText" style="margin-left: 250px;">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="Clients" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Clients
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="Clients">
+                                <li><a class="dropdown-item" asp-controller="Client" asp-action="CreateClient">Create</a></li>
+                                <li><a class="dropdown-item" asp-controller="Client" asp-action="Index">Edit</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" asp-controller="Founders" id="Founders" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Founders
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="Founders">
+                                <li><a class="dropdown-item" href="#">Create</a></li>
+                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                <li><a class="dropdown-item" href="#">Add founder to client</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
     </header>
-    <div class="container">
-        <main>
+        <main id="app">
             @RenderBody()
         </main>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="~/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

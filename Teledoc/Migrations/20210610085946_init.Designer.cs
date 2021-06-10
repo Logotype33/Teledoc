@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DataLayer.Migrations
+namespace Teledoc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210607151105_init")]
+    [Migration("20210610085946_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,15 @@ namespace DataLayer.Migrations
 
                     b.Property<int>("INN")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Patronymic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DataLayer.Migrations
+namespace Teledoc.Migrations
 {
     public partial class init : Migration
     {
@@ -31,6 +31,9 @@ namespace DataLayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     INN = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Patronymic = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: true)
