@@ -11,21 +11,19 @@ using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using Teledoc.DataLayer.Repository;
 
 namespace TeledocTest.Controllers
 {
     public class ClientController : Controller
     {
-        private readonly IGenericRepotory<Client> _repoClient;
+        private readonly IClientAdapterRepo _repoClient;
         private readonly IGenericRepotory<Founder> _repoFounder;
         private IChange<Client> _change;
-        ApplicationDbContext context;
         public ClientController(ApplicationDbContext context)
         {
-            
-            _repoClient = new GenericRepository<Client>(context);
+            _repoClient = new ClientAdapterRepo(context);
             _repoFounder = new GenericRepository<Founder>(context);
-            this.context = context;
         }
 
 
@@ -34,6 +32,9 @@ namespace TeledocTest.Controllers
         {
             return  View(await _repoClient.GetAsync());
         }
+
+
+
         public IActionResult CreateClient()
         {
             return View();
@@ -53,11 +54,13 @@ namespace TeledocTest.Controllers
                     await _repoFounder.CreateAsync(item);
                 }
             }
-            
             await _repoClient.CreateAsync(_change.GetT());
             await _repoClient.SaveAsync();
             return RedirectToAction("Index");
         }
+
+
+
         public IActionResult ChangeClient(int id)
         {
             return View(_repoClient.ClientWithFounders().Where(x => x.Id == id).FirstOrDefault()) ;
@@ -76,21 +79,16 @@ namespace TeledocTest.Controllers
                     item.ChangeDate = DateTime.UtcNow;
                     await _repoFounder.CreateAsync(item);
                 }
-                
             }
-            
-            //if (context.Entry(client).State == EntityState.Modified)
-            //{
                 client.ChangeDate = DateTime.UtcNow;
-            _repoClient.Update(client);
-            //}
-            //добавить отсл были ли изменения
-            context.Entry<Client>(client).Property(x => x.CreatingDate).IsModified = false;
+                _repoClient.Update(client);
+            _repoClient.DontChangeCreatingDate(client);
 
             await _repoClient.SaveAsync();
             
             return RedirectToAction("Index");
         }
+
 
 
         [HttpPost]

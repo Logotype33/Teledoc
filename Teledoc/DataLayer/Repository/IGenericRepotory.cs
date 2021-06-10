@@ -10,7 +10,6 @@ namespace DataLayer.Repository
     public interface IGenericRepotory<TEntity> where TEntity : class
     {
         Task CreateAsync(TEntity item);
-        public IEnumerable<Client> ClientWithFounders();
         Task<TEntity> FindByIdAsync(int id);
         Task<IEnumerable<TEntity>> GetAsync();
         IEnumerable<TEntity> Get();

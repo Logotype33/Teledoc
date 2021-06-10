@@ -11,7 +11,7 @@ namespace DataLayer.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepotory<TEntity> where TEntity : class
     {
-        private readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
         public GenericRepository(ApplicationDbContext context)
         {
@@ -53,9 +53,6 @@ namespace DataLayer.Repository
         {
             await _context.SaveChangesAsync();
         }
-        public IEnumerable<Client> ClientWithFounders()
-        {
-            return _context.Clients.Include(x => x.Founders).ThenInclude(x => x.Client);
-        }
+        
     }
 }

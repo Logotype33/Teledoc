@@ -11,7 +11,6 @@
             Patronymic: ''
         },
         selected: 'Entity',
-        aspdata:''
     },
     methods: {
         AddFounderToList(founder) {
@@ -27,7 +26,6 @@
         },
         deleteFounder(founder) {
             this.founders.splice(this.founders.indexOf(founder), 1)
-
         },
     },
 })
