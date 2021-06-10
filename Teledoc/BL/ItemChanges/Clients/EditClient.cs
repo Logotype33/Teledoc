@@ -12,6 +12,7 @@ namespace BL.ItemChanges.Clients
     {
         public override void Change(Client item)
         {
+            
             base.Change(item);
         }
     }

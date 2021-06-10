@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataLayer.Entityes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,19 +32,30 @@ namespace DataLayer.Repository
         {
             return await _dbSet.AsNoTracking().ToListAsync();
         }
-
+        public IEnumerable<TEntity> Get()
+        {
+            return _dbSet.AsNoTracking().ToList();
+        }
         public void Remove(TEntity item)
         {
             _dbSet.Remove(item);
         }
+        public async Task RemoveById(int id)
+        {
+            _dbSet.Remove(await _dbSet.FindAsync(id));
+        }
 
         public void Update(TEntity item)
         {
-            _dbSet.Update(item);
+            _context.Entry<TEntity>(item).State = EntityState.Modified;
         }
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
+        }
+        public IEnumerable<Client> ClientWithFounders()
+        {
+            return _context.Clients.Include(x => x.Founders).ThenInclude(x => x.Client);
         }
     }
 }

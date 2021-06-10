@@ -19,7 +19,7 @@ namespace DataLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Client>().HasMany(f => f.Founders).WithOne();
+            modelBuilder.Entity<Client>().HasMany(f => f.Founders).WithOne(c=>c.Client);
         }
     }
 }

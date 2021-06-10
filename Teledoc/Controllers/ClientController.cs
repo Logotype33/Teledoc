@@ -4,6 +4,7 @@ using DataLayer;
 using DataLayer.Entityes;
 using DataLayer.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,106 +16,88 @@ namespace TeledocTest.Controllers
 {
     public class ClientController : Controller
     {
-        private readonly IGenericRepotory<Client> _repo;
+        private readonly IGenericRepotory<Client> _repoClient;
+        private readonly IGenericRepotory<Founder> _repoFounder;
         private IChange<Client> _change;
-        ApplicationDbContext _context;
+        ApplicationDbContext context;
         public ClientController(ApplicationDbContext context)
         {
-            _context = context;
-            _repo = new GenericRepository<Client>(context);
+            
+            _repoClient = new GenericRepository<Client>(context);
+            _repoFounder = new GenericRepository<Founder>(context);
+            this.context = context;
         }
 
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return  View(await _repo.GetAsync());
+            return  View(await _repoClient.GetAsync());
         }
-
-
-        [HttpGet("id")]
-        public async Task<IActionResult> GetClientsByIdAsync(int id)
-        {
-            return View(await _repo.FindByIdAsync(id));
-        }
-
-
         public IActionResult CreateClient()
         {
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateClient(Client client)
-        //{
-        //    _change = new CreateClient();
-        //    _change.Change(client);
-        //    await _repo.CreateAsync(_change.GetT());
-        //    await _repo.SaveAsync();
-        //    //Я не до конца понимаю что должен возвращать контроллер в таких ситуациях
-        //    //предпологаю, что должно быть какое оповещение, что изменения успешно завершены
-        //    //return Ok();
-        //    return RedirectToAction("Index");
-        //    //return RedirectToAction("Success", "Home",client.Name);
-        //}
         [HttpPost]
         public async Task<IActionResult> CreateClient(Client client)
         {
-            //_change = new CreateClient();
-            //_change.Change(client);
-            foreach (var item in client.Founders)
+            _change = new CreateClient();
+            _change.Change(client);
+            if (client.Founders !=null)
             {
-                
-                await _context.Founders.AddAsync(item);
+                foreach (var item in client.Founders)
+                {
+                    item.CreatingDate = DateTime.UtcNow;
+                    item.ChangeDate = DateTime.UtcNow;
+                    await _repoFounder.CreateAsync(item);
+                }
             }
-            await _repo.CreateAsync(client);
-            await _repo.SaveAsync();
+            
+            await _repoClient.CreateAsync(_change.GetT());
+            await _repoClient.SaveAsync();
             return RedirectToAction("Index");
         }
-        //[HttpGet]
-        //public IActionResult asd()
-        //{
-        //    //Client client = new Client();
-            
-        //    //var founder= new Founder();
-            
-           
-        //    //ViewBag.Founders = client.Founders;
-        //    return View();
-        //}
-        //[HttpPost]
-        //public IActionResult asd(Client client,ICollection<Founder> founders)
-        //{
-        //    _context.Clients.Add(client);
-        //    foreach (var item in founders)
-        //    {
-        //        _context.Founders.Add(item);
-        //    }
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        public IActionResult ChangeClientView(Client client)
+        public IActionResult ChangeClient(int id)
         {
-            return View(client);
+            return View(_repoClient.ClientWithFounders().Where(x => x.Id == id).FirstOrDefault()) ;
         }
 
-        [HttpPut]
-        public IActionResult ChangeClient(Client client)
+        [HttpPost]
+        public async Task<IActionResult> ChangeClient(Client client)
         {
             _change = new EditClient();
             _change.Change(client);
-            _repo.Update(_change.GetT());
-            _repo.SaveAsync();
+            if (client.Founders != null)
+            {
+                foreach (var item in client.Founders)
+                {
+                    item.CreatingDate = DateTime.UtcNow;
+                    item.ChangeDate = DateTime.UtcNow;
+                    await _repoFounder.CreateAsync(item);
+                }
+                
+            }
+            
+            //if (context.Entry(client).State == EntityState.Modified)
+            //{
+                client.ChangeDate = DateTime.UtcNow;
+            _repoClient.Update(client);
+            //}
+            //добавить отсл были ли изменения
+            context.Entry<Client>(client).Property(x => x.CreatingDate).IsModified = false;
+
+            await _repoClient.SaveAsync();
+            
             return RedirectToAction("Index");
         }
 
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteClient(Client client)
+        [HttpPost]
+        public async Task<IActionResult> DeleteClient(int id)
         {
-            _repo.Remove(client);
-            await _repo.SaveAsync();
+            _repoClient.Remove(_repoClient.ClientWithFounders().Where(x=>x.Id==id).FirstOrDefault());
+            await _repoClient.SaveAsync();
             return RedirectToAction("Index");
         }
     }

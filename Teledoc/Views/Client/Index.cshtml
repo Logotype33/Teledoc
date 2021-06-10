@@ -1,15 +1,35 @@
 ﻿@model IEnumerable<DataLayer.Entityes.Client>
-    <h1>Index</h1>
-@foreach (var item in Model)
-{
-    <p>@item.Name</p>
-    <p>@item.Type</p>
-    <p>@item.INN</p>
-    <p>@item.ChangeDate</p>
-    <p>@item.CreatingDate</p>
-    <a asp-action="ChangeClient">Change</a>
-    <form method="post">
-        <input type="submit" name="name" value="delete" />
-    </form>
-}
-<a asp-action="CreateClient">Create</a>
+<h1 class="text-center">Список компаний</h1>
+<div class="container">
+    <div class="card-group w-75 flex-column" style="margin: 80px auto 0;">
+        @foreach (var item in Model)
+        {
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="text-center">Название компании: @item.Name</h5>
+                </div>
+                <div class="card-body">
+                    <div class="card-body__inner  d-flex justify-content-between">
+                        <div class="company-info pt-3 pb-2">
+
+                            <p>ИНН: @item.INN</p>
+                            <p>Тип: @item.Type</p>
+                        </div>
+                        <div class="date-info pt-3 pb-2">
+                            <p>Дата регистрации: @item.CreatingDate</p>
+                            <p>Дата изменения: @item.ChangeDate</p>
+                        </div>
+                    </div>
+                    <div class="link-group d-flex mt-4 justify-content-center">
+                        <a class="btn btn-primary w-25" asp-action="ChangeClient" asp-route-id="@item.Id" style="margin-right: 20px;">Изменить</a>
+                        <form method="post">
+                            <input class="btn btn-danger" asp-action="DeleteClient" asp-route-id="@item.Id" style="width: 200px;" type="submit" value="Удалить">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+    </div>
+    </div>

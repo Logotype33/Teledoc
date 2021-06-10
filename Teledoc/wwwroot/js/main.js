@@ -10,7 +10,8 @@
             Surname: '',
             Patronymic: ''
         },
-        selected: 'Entity'
+        selected: 'Entity',
+        aspdata:''
     },
     methods: {
         AddFounderToList(founder) {

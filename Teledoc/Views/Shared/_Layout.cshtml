@@ -12,34 +12,24 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home">Main</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Главная</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText" style="margin-left: 250px;">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="Clients" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Clients
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="Clients">
-                                <li><a class="dropdown-item" asp-controller="Client" asp-action="CreateClient">Create</a></li>
-                                <li><a class="dropdown-item" asp-controller="Client" asp-action="Index">Edit</a></li>
-                            </ul>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Client" asp-action="CreateClient">Зарегистрировать</a>
                         </li>
-                    </ul>
+                        </ul>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-controller="Founders" id="Founders" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Founders
+                            <a class="nav-link dropdown-toggle" id="Clients" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Клиенты
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="Founders">
-                                <li><a class="dropdown-item" href="#">Create</a></li>
-                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                <li><a class="dropdown-item" href="#">Add founder to client</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="Clients">
+                                <li><a class="dropdown-item" asp-controller="Client" asp-action="Index">Просмотр</a></li>
                             </ul>
                         </li>
-
                     </ul>
                 </div>
             </div>

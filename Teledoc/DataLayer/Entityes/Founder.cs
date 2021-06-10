@@ -16,6 +16,7 @@ namespace DataLayer.Entityes
         /// Отчество
         /// </summary>
         public string Patronymic { get; set; }
+        public Client Client { get; set; }
         public DateTime CreatingDate { get; set; }
         public DateTime ChangeDate { get; set; }
     }

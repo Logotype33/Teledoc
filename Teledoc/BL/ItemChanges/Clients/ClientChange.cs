@@ -17,6 +17,7 @@ namespace BL.ItemChanges.Clients
         /// Create client
         /// </summary>
         /// <param name="item">client</param>
+        
         public virtual void Change(Client item)
         {
             _client = item;
